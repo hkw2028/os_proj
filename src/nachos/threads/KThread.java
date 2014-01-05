@@ -199,7 +199,6 @@ public class KThread {
 		Machine.interrupt().disable();
 
 		Machine.autoGrader().finishingCurrentThread();
-
 		Lib.assertTrue(toBeDestroyed == null);
 		toBeDestroyed = currentThread;
 
@@ -232,7 +231,6 @@ public class KThread {
 		boolean intStatus = Machine.interrupt().disable();
 
 		currentThread.ready();
-
 		runNextThread();
 
 		Machine.interrupt().restore(intStatus);
@@ -284,7 +282,13 @@ public class KThread {
 	 */
 	public void join() {
 		Lib.debug(dbgThread, "Joining to thread: " + toString());
-
+		/*
+		 * where and when must join() be called?
+		 */
+		if( this.status == statusFinished ){
+			return;
+		}
+		
 		Lib.assertTrue(this != currentThread);
 
 	}
@@ -350,7 +354,6 @@ public class KThread {
 		Lib.assertTrue(Machine.interrupt().disabled());
 
 		Machine.yield();
-
 		currentThread.saveState();
 
 		Lib.debug(dbgThread, "Switching from: " + currentThread.toString()
@@ -417,6 +420,19 @@ public class KThread {
 		Lib.debug(dbgThread, "Enter KThread.selfTest");
 
 		new KThread(new PingTest(1)).setName("forked thread").fork();
+		final KThread joinTestingThread = new KThread( new Runnable(){
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				for( int i = 0; i < 5 ; ++i ){
+					System.out.println( i+""+this.toString() );
+				}
+			}
+			
+		}).setName( "joined thread " );
+		joinTestingThread.fork();
+		joinTestingThread.join();
 		new PingTest(0).run();
 	}
 
