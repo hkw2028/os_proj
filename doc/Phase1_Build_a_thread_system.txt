@@ -6,6 +6,10 @@ Phase#1 Build a thread system
 		The result of calling join() a second time on the same thread is undefined,
 		even if the second caller is a different thread than the first caller. 
 		A thread must finish executing normally whether or not it is joined.
+		
+		1.1.1.
+		
+		
 
 
 	1.2. (5%, 20 lines) Implement condition variables directly, by using interrupt enable and disable to provide atomicity.
@@ -14,6 +18,8 @@ Phase#1 Build a thread system
 		(you may of course still use locks, even though they indirectly use semaphores).
 		Once you are done, you will have two alternative implementations that provide the exact same functionality.
 		Your second implementation of condition variables must reside in class nachos.threads.Condition2.
+		
+		
 
 	1.3. (10%, 40 lines) Complete the implementation of the Alarm class, by implementing the waitUntil(long x) method.
 		A thread calls waitUntil to suspend its own execution until time has advanced to at least now + x.
@@ -23,6 +29,8 @@ Phase#1 Build a thread system
 		Do not fork any additional threads to implement waitUntil(); 
 		you need only modify waitUntil() and the timer interrupt handler.
 		waitUntil is not limited to one thread; any number of threads may call it and be suspended at any one time.
+		
+		
 
 	1.4. (20%, 40 lines) Implement synchronous send and receive of one word messages (also known as Ada-style rendezvous),
 		using condition variables (don't use semaphores!).
@@ -40,6 +48,8 @@ Phase#1 Build a thread system
 		requiring that they wait for one another). 
 		Each communicator should only use exactly one lock.
 		If you're using more than one lock, you're making things too complicated.
+		
+		
 
 
 	1.5. (35%, 125 lines) Implement priority scheduling in Nachos by completing the PriorityScheduler class.
@@ -54,3 +64,5 @@ Phase#1 Build a thread system
 		In choosing which thread to dequeue, the scheduler should always choose a thread of the highest effective priority.
 		If multiple threads with the same highest priority are waiting,
 		the scheduler should choose the one that has been waiting in the queue the longest.
+		
+		
